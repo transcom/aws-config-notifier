@@ -8,7 +8,7 @@ usage() {
     exit 1
 }
 
-echo "gh repo" $GITHUB_REPO "user" $GITHUB_USER
+echo "gh repo $1 user $2 $3"
 
 [[ -z $1 || -z $2 || -z $3 ]] && usage
 set -u
