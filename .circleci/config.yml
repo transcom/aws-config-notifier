@@ -58,6 +58,11 @@ workflows:
       - validate:
           context:
           - org-global
+          filters:
+            branches:
+              ignore: /^.*/
+            tags:
+              only: /^v.*/
       - release:
           requires:
             - validate
