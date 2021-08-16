@@ -1,5 +1,5 @@
 # AWS Config Notifier
-This will be heavily based on IAM Sleuth. 
+This will be heavily based on IAM Sleuth.
 
 The goal of this will be to create a SNS topic notification that is a rollup report of AWS config compliance statuses.
 ie:
