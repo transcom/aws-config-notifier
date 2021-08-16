@@ -74,13 +74,3 @@ workflows:
               ignore: /^.*/
             tags:
               only: /^v.*/
-      - terratest:
-          context:
-          - org-global
-          filters:
-            branches:
-              ignore: /^.*/
-            tags:
-              only: /^v.*/
-          requires:
-            - release
