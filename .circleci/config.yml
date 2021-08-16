@@ -4,17 +4,6 @@ orbs:
   python: circleci/python@1.3.2
 
 jobs:
-  build:
-    docker:
-      - image: cimg/python:3.7
-        auth:
-          password: $DOCKER_PASSWORD
-          username: $DOCKER_USERNAME
-    steps:
-      - checkout
-      - run:
-          name: Build
-          command: scripts/build
   release:
     docker:
       - image: milmove/circleci-docker:milmove-infra-tf103
@@ -64,10 +53,11 @@ workflows:
       - validate:
           context:
           - org-global
-
   release:
     jobs:
       - release:
+          requires:
+            - validate
           context:
           - org-global
           filters:
