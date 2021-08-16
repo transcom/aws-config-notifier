@@ -27,9 +27,6 @@ jobs:
           name: Build
           command: scripts/build
       - run:
-          name: Release
-          command: scripts/release $CIRCLE_PROJECT_USERNAME $CIRCLE_PROJECT_REPONAME << pipeline.git.tag >>
-      - run:
           name: Move checksum to workspace
           command: |
             mkdir -p workspace
