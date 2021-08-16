@@ -7,6 +7,9 @@ usage() {
     echo "Usage: $0 <GITHUB_USER> <GITHUB_REPO> <NEW_TAG>"
     exit 1
 }
+
+echo "gh repo" $GITHUB_REPO "user" $GITHUB_USER
+
 [[ -z $1 || -z $2 || -z $3 ]] && usage
 set -u
 
