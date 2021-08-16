@@ -55,6 +55,9 @@ workflows:
           - org-global
   release:
     jobs:
+      - validate:
+          context:
+          - org-global
       - release:
           requires:
             - validate
