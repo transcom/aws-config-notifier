@@ -20,23 +20,3 @@ echo "Packaging complete, saving as artifact."
 echo "Calculating checksum."
 sha256sum deployment.zip > checksums.txt
 ls
-
-# Setup/how to run
-usage() {
-    echo "Usage: $0 <GITHUB_USER> <GITHUB_REPO> <NEW_TAG>"
-    exit 1
-}
-[[ -z $1 || -z $2 || -z $3 ]] && usage
-set -u
-
-readonly GITHUB_USER=$1
-readonly GITHUB_REPO=$2
-readonly NEW_TAG=$3
-
-if [[ -z "${CIRCLECI+x}" && -z $(type -p ghr) ]]; then
-    echo "ERROR: ghr not found, install via: brew install ghr"
-    exit
-fi
-
-gh release upload --clobber --repo "${GITHUB_USER}/${GITHUB_REPO}" $NEW_TAG $ZIP_NAME checksums.txt
-echo "Uploaded zipfile and checksums to GitHub Release with tag ${NEW_TAG}"
