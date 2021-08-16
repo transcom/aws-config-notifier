@@ -61,6 +61,6 @@ workflows:
       - validate:
           context:
           - org-global
-      - build:
+      - release:
           context:
           - org-global
