@@ -1,0 +1,86 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@1.3.2
+
+jobs:
+  build:
+    docker:
+      - image: cimg/python:3.7
+        auth:
+          password: $DOCKER_PASSWORD
+          username: $DOCKER_USERNAME
+    steps:
+      - checkout
+      - run:
+          name: Build
+          command: scripts/build
+  release:
+    docker:
+      - image: milmove/circleci-docker:milmove-infra-tf103
+        auth:
+          password: $DOCKER_PASSWORD
+          username: $DOCKER_USERNAME
+    steps:
+      - checkout
+      - run:
+          name: Build
+          command: scripts/build
+      - run:
+          name: Release
+          command: scripts/release $CIRCLE_PROJECT_USERNAME $CIRCLE_PROJECT_REPONAME << pipeline.git.tag >>
+      - run:
+          name: Move checksum to workspace
+          command: |
+            mkdir -p workspace
+            cp checksums.txt workspace/checksums.txt
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - checksums.txt
+  validate:
+    docker:
+      - image: milmove/circleci-docker:milmove-infra-tf103
+        auth:
+          password: $DOCKER_PASSWORD
+          username: $DOCKER_USERNAME
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - pre-commit-dot-cache-{{ checksum ".pre-commit-config.yaml" }}
+      - run:
+          name: Run pre-commit tests
+          command: pre-commit run --all-files
+      - save_cache:
+          key: pre-commit-dot-cache-{{ checksum ".pre-commit-config.yaml" }}
+          paths:
+            - ~/.cache/pre-commit
+workflows:
+  version: 2
+  validate:
+    jobs:
+      - validate:
+          context:
+          - org-global
+  release:
+    jobs:
+      - release:
+          context:
+          - org-global
+          filters:
+            branches:
+              ignore: /^.*/
+            tags:
+              only: /^v.*/
+      - terratest:
+          context:
+          - org-global
+          filters:
+            branches:
+              ignore: /^.*/
+            tags:
+              only: /^v.*/
+          requires:
+            - release
