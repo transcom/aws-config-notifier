@@ -27,6 +27,9 @@ jobs:
           name: Build
           command: scripts/build
       - run:
+          name: Release
+          command: scripts/release
+      - run:
           name: Move checksum to workspace
           command: |
             mkdir -p workspace
