@@ -6,7 +6,7 @@ orbs:
 jobs:
   release:
     docker:
-      - image: milmove/circleci-docker:milmove-infra-tf103
+      - image: trussworks/gh-cli
         auth:
           password: $DOCKER_PASSWORD
           username: $DOCKER_USERNAME
