@@ -17,7 +17,6 @@ readonly GITHUB_USER=$1
 readonly GITHUB_REPO=$2
 readonly NEW_TAG=$3
 
-PUBLIC_BUCKET="trussworks-tools-us-west-2"
 ZIP_NAME=${ZIP_NAME:-deployment.zip}
 
 TARGET=s3://$PUBLIC_BUCKET/$GITHUB_REPO/$NEW_TAG/$ZIP_NAME

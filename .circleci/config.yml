@@ -1,20 +1,22 @@
 version: 2.1
 
 orbs:
-  python: circleci/python@1.3.2
+  gh: circleci/github-cli@1.0.3
 
 jobs:
-  release:
+  build:
     docker:
-      - image: trussworks/gh-cli
-        auth:
-          password: $DOCKER_PASSWORD
-          username: $DOCKER_USERNAME
+      - image: 'cimg/base:stable'
     steps:
       - checkout
       - run:
           name: Build
           command: scripts/build
+  release:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
       - run:
           name: Release
           command: scripts/release $CIRCLE_PROJECT_USERNAME $CIRCLE_PROJECT_REPONAME << pipeline.git.tag >>
@@ -63,9 +65,19 @@ workflows:
               ignore: /^.*/
             tags:
               only: /^v.*/
-      - release:
+      - build:
           requires:
             - validate
+          context:
+          - org-global
+          filters:
+            branches:
+              ignore: /^.*/
+            tags:
+              only: /^v.*/
+      - release:
+          requires:
+            - build
           context:
           - org-global
           filters:
