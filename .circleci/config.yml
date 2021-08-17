@@ -62,8 +62,8 @@ workflows:
   build:
     jobs:
       - build:
-        context:
-        - org-global
+          context:
+          - org-global
   release:
     jobs:
       - release:
