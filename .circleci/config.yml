@@ -66,3 +66,10 @@ workflows:
       - release:
           requires:
             - validate
+          context:
+          - org-global
+          filters:
+            branches:
+              ignore: /^.*/
+            tags:
+              only: /^v.*/
