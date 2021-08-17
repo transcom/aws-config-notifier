@@ -17,6 +17,10 @@ jobs:
       - image: cimg/python:3.9.6
     steps:
       - checkout
+      - gh/setup
+      - run:
+        name: Build
+        command: scripts/build
       - run:
           name: Release
           command: scripts/release $CIRCLE_PROJECT_USERNAME $CIRCLE_PROJECT_REPONAME << pipeline.git.tag >>
@@ -55,29 +59,14 @@ workflows:
       - validate:
           context:
           - org-global
+  build:
+    jobs:
+      - build:
+        context:
+          - org-global
   release:
     jobs:
-      - validate:
-          context:
-          - org-global
-          filters:
-            branches:
-              ignore: /^.*/
-            tags:
-              only: /^v.*/
-      - build:
-          requires:
-            - validate
-          context:
-          - org-global
-          filters:
-            branches:
-              ignore: /^.*/
-            tags:
-              only: /^v.*/
       - release:
-          requires:
-            - build
           context:
           - org-global
           filters:
