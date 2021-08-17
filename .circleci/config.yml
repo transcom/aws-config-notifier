@@ -19,8 +19,8 @@ jobs:
       - checkout
       - gh/setup
       - run:
-        name: Build
-        command: scripts/build
+          name: Build
+          command: scripts/build
       - run:
           name: Release
           command: scripts/release $CIRCLE_PROJECT_USERNAME $CIRCLE_PROJECT_REPONAME << pipeline.git.tag >>
