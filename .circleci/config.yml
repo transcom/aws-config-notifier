@@ -55,9 +55,7 @@ workflows:
           - org-global
   release:
     jobs:
-      - release:
-          requires:
-            - validate
+      - validate:
           context:
           - org-global
           filters:
@@ -65,3 +63,6 @@ workflows:
               ignore: /^.*/
             tags:
               only: /^v.*/
+      - release:
+          requires:
+            - validate
