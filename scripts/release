@@ -19,12 +19,5 @@ readonly NEW_TAG=$3
 
 ZIP_NAME=${ZIP_NAME:-deployment.zip}
 
-TARGET=s3://$PUBLIC_BUCKET/$GITHUB_REPO/$NEW_TAG/$ZIP_NAME
-
-if [[ -z "${CIRCLECI+x}" && -z $(type -p ghr) ]]; then
-    echo "ERROR: ghr not found, install via: brew install ghr"
-    exit
-fi
-
 gh release upload --clobber --repo "${GITHUB_USER}/${GITHUB_REPO}" $NEW_TAG $ZIP_NAME checksums.txt
 echo "Uploaded zipfile and checksums to GitHub Release with tag ${NEW_TAG}"
