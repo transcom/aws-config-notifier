@@ -75,7 +75,6 @@ def compliance_notify():
         'Please continue to: https://console.amazonaws-us-gov.com/config/home?region=us-gov-west-1#/dashboard to learn more')
 
     send_to_sns, messages = prepare_sns_message(title=title, report=get_non_compliant_report(), additional_text=additional_text)
-    messages = "this is a test\n" + messages
     if send_to_sns and topic_arn is not None:
         send_sns_message(topic_arn=topic_arn, payload=messages)
 
