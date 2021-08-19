@@ -15,7 +15,7 @@ jobs:
   release:
     docker:
       - image: trussworks/gh-cli
-      auth:
+        auth:
           password: $DOCKER_PASSWORD
           username: $DOCKER_USERNAME
     steps:
