@@ -14,7 +14,7 @@ jobs:
           command: scripts/build
   release:
     docker:
-      - image: cimg/python:3.9.6
+      - image: trussworks/gh-cli
     steps:
       - checkout
       - run:
