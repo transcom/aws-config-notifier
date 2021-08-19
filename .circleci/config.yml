@@ -1,12 +1,12 @@
 version: 2.1
 
-orbs:
-  gh: circleci/github-cli@1.0.3
-
 jobs:
   build:
     docker:
-      - image: cimg/python:3.9.6
+      - image: trussworks/gh-cli
+      - auth:
+          password: $DOCKER_PASSWORD
+          username: $DOCKER_USERNAME
     steps:
       - checkout
       - run:
@@ -17,7 +17,6 @@ jobs:
       - image: cimg/python:3.9.6
     steps:
       - checkout
-      - gh/setup
       - run:
           name: Build
           command: scripts/build
@@ -63,6 +62,11 @@ workflows:
     jobs:
       - build:
           context:
+          - org-global
+  release-test:
+    jobs: 
+      - release:
+        context:
           - org-global
   release:
     jobs:
