@@ -2,13 +2,11 @@
 
 set -e -o pipefail
 
-# Setup/how to run
+Setup/how to run
 usage() {
     echo "Usage: $0 <GITHUB_USER> <GITHUB_REPO> <NEW_TAG>"
     exit 1
 }
-
-echo "gh repo $1 user $2 $3"
 
 [[ -z $1 || -z $2 || -z $3 ]] && usage
 set -u
