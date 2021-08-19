@@ -1,20 +1,19 @@
 #!/bin/bash
 
 set -e -o pipefail
-gh auth
-# Setup/how to run
-# usage() {
-#     echo "Usage: $0 <GITHUB_USER> <GITHUB_REPO> <NEW_TAG>"
-#     exit 1
-# }
 
-# [[ -z $1 || -z $2 || -z $3 ]] && usage
+Setup/how to run
+usage() {
+    echo "Usage: $0 <GITHUB_USER> <GITHUB_REPO> <NEW_TAG>"
+    exit 1
+}
+
+[[ -z $1 || -z $2 || -z $3 ]] && usage
 set -u
 
 readonly GITHUB_USER=$1
 readonly GITHUB_REPO=$2
-# readonly NEW_TAG=$3
-readonly NEW_TAG="v0.1.17"
+readonly NEW_TAG=$3
 
 ZIP_NAME=${ZIP_NAME:-deployment.zip}
 

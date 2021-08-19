@@ -15,6 +15,9 @@ jobs:
   release:
     docker:
       - image: trussworks/gh-cli
+      auth:
+          password: $DOCKER_PASSWORD
+          username: $DOCKER_USERNAME
     steps:
       - checkout
       - run:
@@ -63,11 +66,6 @@ workflows:
       - build:
           context:
           - org-global
-  release-test:
-    jobs: 
-      - release:
-          context:
-            - org-global
   release:
     jobs:
       - release:
