@@ -66,8 +66,8 @@ workflows:
   release-test:
     jobs: 
       - release:
-        context:
-          - org-global
+          context:
+            - org-global
   release:
     jobs:
       - release:
