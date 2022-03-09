@@ -40,14 +40,12 @@ def prepare_sns_message(title="", report=None, additional_text=""):
     message (str): the formatted string
     """
     message = f"{title}\n```"
+    send_to_sns = False
     if len(report) > 0:
+        send_to_sns = True
         message += "\n".join([f"{result['resource_type']}: {result['count']}" for result in report])
         LOGGER.info(f"message: {message}")
         message += f"```\n{additional_text}"
-
-    send_to_sns = False
-    if len(message) > 0:
-        send_to_sns = True
 
     return send_to_sns, message
 
