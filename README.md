@@ -6,19 +6,19 @@ This is a helpful lambda that will notify you about various `aws-config`
 ## Deployment
 
 It is recommended you use the
-[trussworks/lambda/aws](https://github.com/trussworks/terraform-aws-lambda)
+[transcom/lambda/aws](https://github.com/transcom/terraform-aws-lambda)
 module to do the deployment.
  Below is an example:
 
 ```hcl
 
 module "config_notifier" {
-  source                 = "trussworks/lambda/aws"
-  version                = "2.4.0"
+  source                 = "transcom/lambda/aws"
+  version                = "3.0.0"
   name                   = "config_notifier"
   handler                = "handler.handler"
   job_identifier         = "config_notifier"
-  runtime                = "python3.8"
+  runtime                = "python3.11"
   timeout                = "500"
   role_policy_arns_count = 2
   role_policy_arns = [
